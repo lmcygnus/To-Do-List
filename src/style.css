@@ -1,0 +1,13 @@
+body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    margin: 0%;
+}
+
+.sidebar {
+    background-color: red;
+}
+
+.mainContent {
+    background-color: yellow;
+}
