@@ -18,20 +18,27 @@
     <div class="mainContent">
         <button id="newToDo">New To Do</button>
         <dialog>
+            <button class="close">Close</button>
            <form action="submit">
-            <input type="text" id="title">
-            <label for="title">Title</label>
-
-            <textarea name="description" id="description" cols="30" rows="10"></textarea>
-
-            <input type="date" id="date">
-            <label for="date">Title</label>
-
-            <input type="checkbox" id="priority1">
-            <label for="priority1">Title</label>
-            <input type="checkbox" id="priority2">
-            <label for="priority2">Title</label>
-            
+            <label for="title">
+                <input type="text" id="title">Title
+            </label>
+            <label for="description"> Description
+                <textarea name="description" id="description" cols="20" rows="2"></textarea>
+            </label> <br>
+            <label for="date">
+                <input type="date" id="date">Due Date
+            </label> <br>
+            <label> 
+                <input type="radio" name="opcion" value="opcion1"> Opción 1
+            </label>
+            <label>
+                <input type="radio" name="opcion" value="opcion2"> Opción 2
+            </label>
+            <label>
+                <input type="radio" name="opcion" value="opcion3"> Opción 3
+            </label> <br>
+            <button type="submit">Create</button>
            </form> 
         </dialog>
     </div>
