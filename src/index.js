@@ -11,7 +11,8 @@ const cancel = document.querySelector(".cancel");
 const projectDialog = document.querySelector(".projectDialog");
 const ul = document.querySelector("ul");
 const projectImput = document.querySelector("#NewProjectImput");
-const projectForm = document.querySelector("#Project")
+const projectForm = document.querySelector("#Project");
+const toggleButton = document.querySelector(".burger");
 
 
 newTodo.onclick = () => {
@@ -29,6 +30,12 @@ newProjectBt.onclick = () => {
 cancel.onclick = () => {
   projectDialog.close();
 }
+
 projectForm.addEventListener("submit", (e) => {
   createNewProject(projectImput, ul, e);
 })
+
+toggleButton.addEventListener('click', function () {
+  sidebar.style.display = (sidebar.style.display === 'none' || sidebar.style.display === '') ? 'block' : 'none';
+  
+});
