@@ -1,11 +1,9 @@
+import { setData } from "./localStorage";
+
 class projects {
     constructor(project){
         this.project = project;
     }   
-}
-
-const setProjects = (newProject) => {
-    localStorage.setItem("newProject", newProject);
 }
 
 const createNewProject = (imput, parent, e) => {
@@ -13,11 +11,11 @@ const createNewProject = (imput, parent, e) => {
     const newProject = new projects (
         imput.value,
     )
-    setProjects(newProject);
+    setData("newProject", newProject);
     const newProjectLi = document.createElement("li");
     newProjectLi.textContent = `${imput.value}`;
     parent.appendChild(newProjectLi);
-}
+};
     
 export {projects, createNewProject};
 
