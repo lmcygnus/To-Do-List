@@ -15,12 +15,16 @@
         </ul>
         <button id="newProject">New Project</button>
         <dialog class="projectDialog">
-            <input type="text" id="NewProjectImput">
+            <form action="submit" id="Project">
+                <input type = "text" id="NewProjectImput" required>
+                <button type = "submit" class= "accept"> Accept </button>
+                <button type = "button" class = "cancel">Cancel</button>
+            </form>
         </dialog>
     </div>
     <div class="mainContent">
         <button id="newToDo">New To Do</button>
-        <dialog>
+        <dialog id="newTodoDialog">
             <button class="close">Close</button>
            <form action="submit">
             <label for="title">
