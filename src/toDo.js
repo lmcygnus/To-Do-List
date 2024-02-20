@@ -19,6 +19,10 @@ const createNewToDo = (titleImput, descriptionImput, dueDateImput, priorityImput
     const toDoDiv = document.createElement("div");
     toDoDiv.classList.add("taskDiv");
     toDoDiv.textContent = titleImput.value;
+
+    const toDocheckBox = document.createElement("imput");
+    toDocheckBox.type = "checkbox";
+    toDoDiv.appendChild(toDocheckBox);
     parent.appendChild(toDoDiv);
     console.log(newToDo);
 }
