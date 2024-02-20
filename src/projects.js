@@ -11,10 +11,14 @@ const createNewProject = (imput, parent, e) => {
     const newProject = new projects (
         imput.value,
     )
-    setData("newProject", newProject);
+    setData(`${imput.value} project`, newProject);
     const newProjectLi = document.createElement("li");
     newProjectLi.textContent = `${imput.value}`;
+
+    const deleteProject = document.createElement("button");
+    deleteProject.textContent = "x";
     parent.appendChild(newProjectLi);
+    newProjectLi.appendChild(deleteProject);
 };
     
 export {projects, createNewProject};
