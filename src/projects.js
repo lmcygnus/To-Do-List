@@ -13,10 +13,12 @@ const createNewProject = (imput, parent, e) => {
     );
     setData(`${imput.value} project`, newProject);
     const newProjectLi = document.createElement("li");
+    newProjectLi.classList.add("projects");
     newProjectLi.textContent = `${imput.value}`;
 
     const deleteProject = document.createElement("button");
-    deleteProject.textContent = "x";
+    deleteProject.textContent = "🗑️";
+    deleteProject.classList.add("deleteProject");
     parent.appendChild(newProjectLi);
     newProjectLi.appendChild(deleteProject);
 };

@@ -19,18 +19,15 @@ const projectDialog = document.querySelector(".projectDialog");
 const ul = document.querySelector("ul");
 const projectImput = document.querySelector("#NewProjectImput");
 const projectForm = document.querySelector("#Project");
+let currentProject = "Default";
 
 //New to do variables
 
+const taskForm = document.querySelector("#createTask")
 const titleImput = document.querySelector("#title");
 const descriptionImput = document.querySelector("#description");
 const dueDateImput = document.querySelector("#date");
 const priorityImput = document.querySelectorAll('input[type="radio"]');
-
-//Checkboxes
-
-const checkboxes = document.querySelectorAll('.task-list');
-const toDoDiv = document.querySelector(".toDoDiv");
 
 newTodo.onclick = () => {
   dialog.show();
@@ -55,23 +52,20 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 projectForm.addEventListener("submit", (e) => {
   createNewProject(projectImput, ul, e);
+  currentProject = projectImput.value;
   projectForm.reset();
   projectDialog.close();
+  console.log(currentProject);
 })
 
 //toggleButton.addEventListener('click', function () {
   //sidebar.style.display = (sidebar.style.display === 'none' || sidebar.style.display === '') ? 'block' : 'none';
 //});
 
-document.getElementById("createTask").addEventListener("submit", (e) => {
-  createNewToDo(titleImput, descriptionImput, dueDateImput, priorityImput, e, mainContent)});
-  
-checkboxes.forEach(function(checkbox,toDoDiv ) {
-  checkbox.addEventListener('change', function() {
-    if (this.checked) {
-      toDoDiv.classList.add('checked');
-    } else {
-    toDoDiv.classList.remove('checked');
-    }
-  });
+taskForm.addEventListener("submit", (e) => {
+  createNewToDo(titleImput, descriptionImput, dueDateImput, priorityImput, currentProject, e, mainContent)
+  dialog.close();
+  taskForm.reset();
 });
+
+  

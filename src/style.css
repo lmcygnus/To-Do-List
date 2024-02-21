@@ -41,6 +41,11 @@ h3 {
 
 .mainContent {
     margin: 5%;
+    margin-left: 0%;
+}
+
+#newToDo {
+    margin-left: 40%;
 }
 
 dialog {
@@ -94,8 +99,9 @@ button {
     gap: 20px;
     align-items: center;
 }
-.checked {
-    text-decoration: line-through;
+.deleteProject:hover {
+    color: var(--main-color);
+    background-color: white;
 }
 
 

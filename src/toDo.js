@@ -10,10 +10,16 @@ class ToDo {
 
 let numberForId = 0;
 
-const newTaskDOM = (parent, titleImput) => {
-
-numberForId ++;
-
+const createNewToDo = (titleImput, descriptionImput, dueDateImput, priorityImput, currentProject, e, parent) => {
+    numberForId ++;
+    e.preventDefault();
+    const newToDo = new ToDo(
+        titleImput.value,
+        descriptionImput.value,
+        dueDateImput.value,
+        priorityImput.value,
+        currentProject,
+    )
     const toDoDiv = document.createElement("div");
     toDoDiv.classList.add("taskDiv");
 
@@ -22,14 +28,13 @@ numberForId ++;
 
     const checkbox = document.createElement('input');
     checkbox.setAttribute('id', `${numberForId}cbtest-19`);
-    checkbox.classList.add("task-list");
     checkbox.setAttribute('type', 'checkbox');
 
     const label = document.createElement('label');
+    label.classList.add('check-box');
     label.setAttribute('for', `${numberForId}cbtest-19`);
 
     const taskName = document.createElement('div');
-    taskName.classList.add("taskName");
     taskName.textContent = titleImput.value;
 
     checkboxWrapper.appendChild(checkbox);
@@ -37,18 +42,7 @@ numberForId ++;
     toDoDiv.appendChild(checkboxWrapper);
     toDoDiv.appendChild(taskName);
     parent.appendChild(toDoDiv);
-}
-
-const createNewToDo = (titleImput, descriptionImput, dueDateImput, priorityImput, e, parent) => {
-    e.preventDefault();
-    const newToDo = new ToDo(
-        titleImput.value,
-        descriptionImput.value,
-        dueDateImput.value,
-        priorityImput.value,
-        "Default",
-    )
-    newTaskDOM(parent, titleImput);
+    console.log(newToDo);
 }
 
 const todayDate = () => {
