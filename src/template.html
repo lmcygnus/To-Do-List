@@ -12,9 +12,9 @@
             <h3>Projects</h3>
             <ul>
             </ul>
-            <button id="newProject">New Project</button>
+            <button id="newProject" value="Default">New Project</button>
             <dialog class="projectDialog">
-                <form action="submit" id="Project">
+                <form action="submit" id="Project" value="Default">
                     <input type = "text" id="NewProjectImput" required>
                     <button type = "submit" class= "accept"> Accept </button>
                     <button type = "button" class = "cancel">Cancel</button>
@@ -27,13 +27,13 @@
         <dialog id="newTodoDialog">
             <form action="submit" id="createTask">
                 <label for="title">
-                    <input type="text" id="title">Title
+                    <input type="text" id="title" required>Title
                 </label>
                 <label for="description"> Description
                     <textarea name="description" id="description" cols="20" rows="2"></textarea>
                 </label> <br>
                 <label for="date">
-                    <input type="date" id="date">Due Date
+                    <input type="date" id="date" required>Due Date
                 </label> <br>
                 <label> 
                     <input type="radio" name="opcion" value="opcion1"> High
@@ -45,7 +45,7 @@
                     <input type="radio" name="opcion" value="opcion3"> Low
                 </label> <br>
                 <button type="submit">Create</button>
-                <button id="close">Close</button>
+                <button id="close" type="button">Close</button>
             </form> 
         </dialog>
     </div>

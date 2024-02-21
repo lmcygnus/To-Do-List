@@ -28,6 +28,7 @@ const priorityImput = document.querySelectorAll('input[type="radio"]');
 
 newTodo.onclick = () => {
   dialog.show();
+  todayDate();
 }
 
 closeBt.onclick = () => {
@@ -42,6 +43,10 @@ cancel.onclick = () => {
   projectDialog.close();
 }
 
+document.addEventListener("DOMContentLoaded", (e) => {
+  createNewProject(newProjectBt, ul, e);
+})
+
 projectForm.addEventListener("submit", (e) => {
   createNewProject(projectImput, ul, e);
   projectForm.reset();
@@ -52,7 +57,7 @@ projectForm.addEventListener("submit", (e) => {
   //sidebar.style.display = (sidebar.style.display === 'none' || sidebar.style.display === '') ? 'block' : 'none';
 //});
 
-dialog.addEventListener("show", todayDate);
-
 document.getElementById("createTask").addEventListener("submit", (e) => {
   createNewToDo(titleImput, descriptionImput, dueDateImput, priorityImput, e, mainContent)});
+
+
