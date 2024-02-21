@@ -1,4 +1,5 @@
 import "./style.css";
+import "./checkbox.css"
 import { projects,  createNewProject} from "./projects";
 import { ToDo, createNewToDo, todayDate } from "./toDo";
 

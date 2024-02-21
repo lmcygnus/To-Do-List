@@ -19,22 +19,25 @@ const createNewToDo = (titleImput, descriptionImput, dueDateImput, priorityImput
     )
     const toDoDiv = document.createElement("div");
     toDoDiv.classList.add("taskDiv");
-    toDoDiv.textContent = titleImput.value;
 
-    var checkboxWrapper = document.createElement('div');
+    const checkboxWrapper = document.createElement('div');
     checkboxWrapper.classList.add('checkbox-wrapper-19');
 
-    var checkbox = document.createElement('input');
+    const checkbox = document.createElement('input');
     checkbox.setAttribute('id', 'cbtest-19');
     checkbox.setAttribute('type', 'checkbox');
 
-    var label = document.createElement('label');
+    const label = document.createElement('label');
     label.classList.add('check-box');
     label.setAttribute('for', 'cbtest-19');
+
+    const taskName = document.createElement('div');
+    taskName.textContent = titleImput.value;
 
     checkboxWrapper.appendChild(checkbox);
     checkboxWrapper.appendChild(label);
     toDoDiv.appendChild(checkboxWrapper);
+    toDoDiv.appendChild(taskName);
     parent.appendChild(toDoDiv);
     console.log(newToDo);
 }
