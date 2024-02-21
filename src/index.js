@@ -1,7 +1,7 @@
 import "./style.css";
 import "./checkbox.css"
-import { projects,  createNewProject} from "./projects";
-import { ToDo, createNewToDo, todayDate } from "./toDo";
+import {createNewProject} from "./projects";
+import {createNewToDo, todayDate } from "./toDo";
 
 const body = document.querySelector("body");
 const sidebar = document.querySelector(".sidebar");
@@ -26,6 +26,11 @@ const titleImput = document.querySelector("#title");
 const descriptionImput = document.querySelector("#description");
 const dueDateImput = document.querySelector("#date");
 const priorityImput = document.querySelectorAll('input[type="radio"]');
+
+//Checkboxes
+
+const checkboxes = document.querySelectorAll('.task-list');
+const toDoDiv = document.querySelector(".toDoDiv");
 
 newTodo.onclick = () => {
   dialog.show();
@@ -60,5 +65,13 @@ projectForm.addEventListener("submit", (e) => {
 
 document.getElementById("createTask").addEventListener("submit", (e) => {
   createNewToDo(titleImput, descriptionImput, dueDateImput, priorityImput, e, mainContent)});
-
-
+  
+checkboxes.forEach(function(checkbox,toDoDiv ) {
+  checkbox.addEventListener('change', function() {
+    if (this.checked) {
+      toDoDiv.classList.add('checked');
+    } else {
+    toDoDiv.classList.remove('checked');
+    }
+  });
+});

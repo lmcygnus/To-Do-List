@@ -149,6 +149,10 @@
     .checkbox-wrapper-19 .check-box.checked {
     border-color: var(--main-color);
   }
+
+  input[type=checkbox]:checked {
+    text-decoration: line-through;
+  }
   
   .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::after,
     .checkbox-wrapper-19 .check-box.checked::after {

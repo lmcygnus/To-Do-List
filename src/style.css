@@ -94,5 +94,8 @@ button {
     gap: 20px;
     align-items: center;
 }
+.checked {
+    text-decoration: line-through;
+}
 
 
