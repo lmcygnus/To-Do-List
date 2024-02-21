@@ -23,19 +23,15 @@
         </div>
         <div class="mainContent">
             <button class="burger">x</button>
-            <button id="newToDo">New To Do</button>
+            <button id="newToDo"> + Add Task</button>
         <dialog id="newTodoDialog">
             <form action="submit" id="createTask">
-                <label for="title">
-                    <input type="text" id="title" required>Title
-                </label>
-                <label for="description"> Description
-                    <textarea name="description" id="description" cols="20" rows="2"></textarea>
-                </label> <br>
-                <label for="date">
-                    <input type="date" id="date" required>Due Date
-                </label> <br>
-                <label> 
+                <input type="text" id="title" required placeholder="Name">
+                <textarea name="description" id="description" cols="20" rows="2" placeholder="Description"></textarea> <br>
+                <label for="date">Due Date:</label> 
+                <input type="date" id="date" required> <br>
+                <fieldset>
+                   <label> 
                     <input type="radio" name="opcion" value="opcion1"> High
                 </label>
                 <label>
@@ -44,8 +40,9 @@
                 <label>
                     <input type="radio" name="opcion" value="opcion3"> Low
                 </label> <br>
-                <button type="submit">Create</button>
-                <button id="close" type="button">Close</button>
+                </fieldset>
+                <button type="submit">Add</button>
+                <button id="close" type="button">Cancel</button>
             </form> 
         </dialog>
     </div>
