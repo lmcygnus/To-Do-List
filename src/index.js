@@ -1,6 +1,6 @@
 import "./style.css";
 import "./checkbox.css"
-import {createNewProject} from "./projects";
+import {createNewProject, addNewTasks} from "./projects";
 import {createNewToDo, todayDate } from "./toDo";
 
 const body = document.querySelector("body");
@@ -20,6 +20,7 @@ const ul = document.querySelector("ul");
 const projectImput = document.querySelector("#NewProjectImput");
 const projectForm = document.querySelector("#Project");
 let currentProject = "Default";
+const projects = document.querySelectorAll("projects");
 
 //New to do variables
 
@@ -53,10 +54,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
 projectForm.addEventListener("submit", (e) => {
   createNewProject(projectImput, ul, e);
   currentProject = projectImput.value;
+  document.getElementById(`${projectImput.value}project`).focus();
   projectForm.reset();
   projectDialog.close();
-  console.log(currentProject);
-})
+});
 
 //toggleButton.addEventListener('click', function () {
   //sidebar.style.display = (sidebar.style.display === 'none' || sidebar.style.display === '') ? 'block' : 'none';
@@ -67,5 +68,11 @@ taskForm.addEventListener("submit", (e) => {
   dialog.close();
   taskForm.reset();
 });
+
+projects.forEach((project) => {
+  project.addEventListener("focus", saddNewTasks(mainContent, project));
+  console.log(project.textContent);
+})
+
 
   

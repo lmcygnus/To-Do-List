@@ -10,16 +10,7 @@ class ToDo {
 
 let numberForId = 0;
 
-const createNewToDo = (titleImput, descriptionImput, dueDateImput, priorityImput, currentProject, e, parent) => {
-    numberForId ++;
-    e.preventDefault();
-    const newToDo = new ToDo(
-        titleImput.value,
-        descriptionImput.value,
-        dueDateImput.value,
-        priorityImput.value,
-        currentProject,
-    )
+const newTodoDOM = (titleImput, parent) => {
     const toDoDiv = document.createElement("div");
     toDoDiv.classList.add("taskDiv");
 
@@ -44,6 +35,20 @@ const createNewToDo = (titleImput, descriptionImput, dueDateImput, priorityImput
     parent.appendChild(toDoDiv);
     console.log(newToDo);
 }
+
+const createNewToDo = (titleImput, descriptionImput, dueDateImput, priorityImput, currentProject, e, parent) => {
+    numberForId ++;
+    e.preventDefault();
+    const newToDo = new ToDo(
+        titleImput.value,
+        descriptionImput.value,
+        dueDateImput.value,
+        priorityImput.value,
+        currentProject,
+    )
+    newTodoDOM(titleImput, parent);
+}
+
 
 const todayDate = () => {
     let currentDate = new Date().toISOString().split('T')[0];
