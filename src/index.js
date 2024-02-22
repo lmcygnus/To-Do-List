@@ -70,7 +70,7 @@ taskForm.addEventListener("submit", (e) => {
 });
 
 projects.forEach((project) => {
-  project.addEventListener("focus", saddNewTasks(mainContent, project));
+  project.addEventListener("focus", addNewTasks(mainContent, project));
   console.log(project.textContent);
 })
 
