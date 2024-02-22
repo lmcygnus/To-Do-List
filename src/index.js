@@ -6,9 +6,9 @@ import {createNewToDo, todayDate } from "./toDo";
 const body = document.querySelector("body");
 const sidebar = document.querySelector(".sidebar");
 const mainContent = document.querySelector(".mainContent");
-const dialog = document.querySelector("#newTodoDialog");
-const newTodo = document.querySelector("#newToDo");
-const closeBt = document.querySelector("#close");
+const dialog = document.querySelector(".newTodoDialog");
+const newTodo = document.querySelector(".newToDo");
+const closeBt = document.querySelector(".close");
 const toggleButton = document.querySelector(".burger");
 
 //New Projects variables
@@ -20,15 +20,15 @@ const ul = document.querySelector("ul");
 const projectImput = document.querySelector("#NewProjectImput");
 const projectForm = document.querySelector("#Project");
 let currentProject = "Default";
-const projects = document.querySelectorAll("projects");
+const acceptBt = document.querySelector(".accept");
 
 //New to do variables
 
-const taskForm = document.querySelector("#createTask")
-const titleImput = document.querySelector("#title");
-const descriptionImput = document.querySelector("#description");
-const dueDateImput = document.querySelector("#date");
-const priorityImput = document.querySelectorAll('input[type="radio"]');
+const taskForm = document.querySelector(".createTask")
+const titleImput = document.querySelector(".title");
+const descriptionImput = document.querySelector(".description");
+const dueDateImput = document.querySelector(".date");
+
 
 newTodo.onclick = () => {
   dialog.show();
@@ -64,15 +64,18 @@ projectForm.addEventListener("submit", (e) => {
 //});
 
 taskForm.addEventListener("submit", (e) => {
-  createNewToDo(titleImput, descriptionImput, dueDateImput, priorityImput, currentProject, e, mainContent)
+  createNewToDo(titleImput, descriptionImput, dueDateImput, currentProject, e, mainContent)
   dialog.close();
   taskForm.reset();
 });
 
-projects.forEach((project) => {
-  project.addEventListener("focus", addNewTasks(mainContent, project));
+/*const proyectos = document.querySelectorAll(".projectLi");
+proyectos.forEach((project) => {
   console.log(project.textContent);
-})
+  project.addEventListener("click", function() {
+    addNewTasks(mainContent, project);
+  });
+});*/
 
 
   

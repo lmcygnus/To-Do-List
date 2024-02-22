@@ -45,7 +45,7 @@ h3 {
     color: #515151;
 }
 
-#newToDo {
+.newToDo {
     margin-left: 40%;
 }
 
@@ -104,7 +104,14 @@ button {
     color: var(--main-color);
     background-color: white;
 }
+
+.projectLi {
+    font-style: oblique;
+}
 .projectLi:focus {
     color: yellow  ;
+}
+.projectTitle {
+    color: var(--main-color);
 }
 

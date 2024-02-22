@@ -21,7 +21,6 @@ const newProjectDOM = (imput, parent) => {
     newProjectLi.appendChild(libutton);
     newProjectLi.appendChild(deleteProject);
     parent.appendChild(newProjectLi);
-    console.log(libutton.id);
 }
 
 const createNewProject = (imput, parent, e) => {
@@ -33,60 +32,60 @@ const createNewProject = (imput, parent, e) => {
     //setData(`${imput.value} project`, newProject);
 };
 
-const addNewTasks = (mainContent, imput) => {
-    
+const addNewTasks = (mainContent, input) => {
     const projectTitle = document.createElement("div");
-    projectTitle.textContent = imput.value;
+    projectTitle.textContent = input.textContent;
     projectTitle.classList.add("projectTitle");
-    const newTodoDialog = document.createElement("dialog");
-    newTodoDialog.id = "newTodoDialog";
-
+  
+    const newTodoDialog = document.createElement("div");
+    newTodoDialog.classList.add("newTodoDialog");
+  
     const createTaskForm = document.createElement("form");
-    createTaskForm.action = "submit";
-    createTaskForm.id = "createTask";
-
+    createTaskForm.action = "enviar";
+    createTaskForm.classList.add("createTask");
+  
     const titleInput = document.createElement("input");
     titleInput.type = "text";
-    titleInput.id = "title";
+    titleInput.classList.add("title");
     titleInput.required = true;
-    titleInput.placeholder = "Name";
-
+    titleInput.placeholder = "Nombre";
+  
     const descriptionTextarea = document.createElement("textarea");
-    descriptionTextarea.name = "description";
-    descriptionTextarea.id = "description";
+    descriptionTextarea.name = "descripción";
+    descriptionTextarea.classList.add("description");
     descriptionTextarea.cols = "20";
     descriptionTextarea.rows = "2";
-    descriptionTextarea.placeholder = "Description";
-
+    descriptionTextarea.placeholder = "Descripción";
+  
     const dateLabel = document.createElement("label");
-    dateLabel.for = "date";
-    dateLabel.textContent = "Due Date:";
-
+    dateLabel.textContent = "Fecha de vencimiento:";
+  
     const dateInput = document.createElement("input");
     dateInput.type = "date";
-    dateInput.id = "date";
+    dateInput.classList.add("fecha");
     dateInput.required = true;
-
+  
     const addButton = document.createElement("button");
     addButton.type = "submit";
-    addButton.textContent = "Add";
-
+    addButton.textContent = "Agregar";
+  
     const cancelButton = document.createElement("button");
-    cancelButton.id = "close";
+    cancelButton.classList.add("cerrar");
     cancelButton.type = "button";
-    cancelButton.textContent = "Cancel";
-
+    cancelButton.textContent = "Cancelar";
+  
+    dateLabel.appendChild(dateInput);
     createTaskForm.appendChild(titleInput);
     createTaskForm.appendChild(descriptionTextarea);
     createTaskForm.appendChild(document.createElement("br"));
     createTaskForm.appendChild(dateLabel);
-    createTaskForm.appendChild(dateInput);
     createTaskForm.appendChild(document.createElement("br"));
     createTaskForm.appendChild(addButton);
     createTaskForm.appendChild(cancelButton);
+  
     newTodoDialog.appendChild(createTaskForm);
     mainContent.appendChild(newTodoDialog);
-}
+  };  
     
 export {projects, createNewProject, addNewTasks};
 

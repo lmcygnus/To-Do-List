@@ -1,9 +1,8 @@
 class ToDo {
-    constructor(title, description, dueDate, priority, project) {
+    constructor(title, description, dueDate, project) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
-        this.priority = priority;
         this.project = project;
     }
 }
@@ -33,26 +32,25 @@ const newTodoDOM = (titleImput, parent) => {
     toDoDiv.appendChild(checkboxWrapper);
     toDoDiv.appendChild(taskName);
     parent.appendChild(toDoDiv);
-    console.log(newToDo);
 }
 
-const createNewToDo = (titleImput, descriptionImput, dueDateImput, priorityImput, currentProject, e, parent) => {
+const createNewToDo = (titleImput, descriptionImput, dueDateImput, currentProject, e, parent) => {
     numberForId ++;
     e.preventDefault();
     const newToDo = new ToDo(
         titleImput.value,
         descriptionImput.value,
         dueDateImput.value,
-        priorityImput.value,
         currentProject,
     )
     newTodoDOM(titleImput, parent);
+    console.log(newToDo);
 }
 
 
 const todayDate = () => {
     let currentDate = new Date().toISOString().split('T')[0];
-    document.getElementById('date').value = currentDate;
+    document.querySelector('.date').value = currentDate;
 };
 
-export {ToDo, createNewToDo, todayDate};
+export {ToDo, createNewToDo, todayDate,};
