@@ -47,10 +47,17 @@ const createNewToDo = (titleImput, descriptionImput, dueDateImput, currentProjec
     console.log(newToDo);
 }
 
-
 const todayDate = () => {
     let currentDate = new Date().toISOString().split('T')[0];
     document.querySelector('.date').value = currentDate;
 };
 
-export {ToDo, createNewToDo, todayDate,};
+const taskDone = (myCheckbox, taskText) => {
+    if (myCheckbox.checked) {
+        taskText.style.textDecoration = "line-through"
+    } else {
+        taskText.style.textDecoration = "none";
+    }
+};
+
+export {ToDo, createNewToDo, todayDate, taskDone};

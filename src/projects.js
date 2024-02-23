@@ -32,10 +32,7 @@ const createNewProject = (imput, parent, e) => {
     //setData(`${imput.value} project`, newProject);
 };
 
-const addNewTasks = (mainContent, input) => {
-    const projectTitle = document.createElement("div");
-    projectTitle.textContent = input.textContent;
-    projectTitle.classList.add("projectTitle");
+const addNewTasks = (mainContent) => {
   
     const newTodoDialog = document.createElement("div");
     newTodoDialog.classList.add("newTodoDialog");
@@ -86,6 +83,16 @@ const addNewTasks = (mainContent, input) => {
     newTodoDialog.appendChild(createTaskForm);
     mainContent.appendChild(newTodoDialog);
   };  
+
+const projectAddTask = (mainContent, input) => {
+    const projectTitle = document.createElement("div");
+    projectTitle.textContent = input.textContent;
+    projectTitle.classList.add("projectTitle");
+
+    const addTask = document.createElement("button");
+    addTask.classList.add("newToDo");
+    addTask.addEventListener("click", addNewTasks(mainContent));
+}
     
-export {projects, createNewProject, addNewTasks};
+export {projects, createNewProject, addNewTasks, projectAddTask};
 

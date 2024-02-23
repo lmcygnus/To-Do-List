@@ -1,7 +1,7 @@
 import "./style.css";
 import "./checkbox.css"
-import {createNewProject, addNewTasks} from "./projects";
-import {createNewToDo, todayDate } from "./toDo";
+import {createNewProject, addNewTasks, projectAddTask} from "./projects";
+import {createNewToDo, todayDate, taskDone } from "./toDo";
 
 const body = document.querySelector("body");
 const sidebar = document.querySelector(".sidebar");
@@ -57,6 +57,7 @@ projectForm.addEventListener("submit", (e) => {
   document.getElementById(`${projectImput.value}project`).focus();
   projectForm.reset();
   projectDialog.close();
+  projectAddTask(mainContent, projectImput);
 });
 
 //toggleButton.addEventListener('click', function () {
@@ -69,13 +70,13 @@ taskForm.addEventListener("submit", (e) => {
   taskForm.reset();
 });
 
-/*const proyectos = document.querySelectorAll(".projectLi");
-proyectos.forEach((project) => {
-  console.log(project.textContent);
-  project.addEventListener("click", function() {
-    addNewTasks(mainContent, project);
-  });
-});*/
+
+
+
+  //project.addEventListener("click", function() {
+   
+  //addNewTasks(mainContent, project);
+  //});
 
 
   
