@@ -55,6 +55,11 @@ const todayDate = () => {
     document.querySelector('.date').value = currentDate;
 };
 
+const closeDialogs = (dialogs, forms) => {
+    forms.reset();
+    dialogs.close();
+  }
+
 const taskDone = (myCheckbox, taskText) => {
     if (myCheckbox.checked) {
         taskText.style.textDecoration = "line-through"
@@ -63,4 +68,4 @@ const taskDone = (myCheckbox, taskText) => {
     }
 };
 
-export {ToDo, createNewToDo, todayDate, taskDone};
+export {ToDo, createNewToDo, todayDate, taskDone, closeDialogs};

@@ -1,4 +1,6 @@
 import { setData } from "./localStorage";
+import { currentProject } from ".";
+import { createNewToDo, todayDate, closeDialogs } from "./toDo";
 
 class projects {
     constructor(project){
@@ -35,12 +37,13 @@ const createNewProject = (imput, parent, e) => {
 };
 
 const addNewTasks = (mainContent) => {
-    const newTodoDialog = document.createElement("div");
+    const newTodoDialog = document.createElement("dialog");
     newTodoDialog.classList.add("newTodoDialog");
     newTodoDialog.style.width = "210px";
+    newTodoDialog.open = true;
   
     const createTaskForm = document.createElement("form");
-    createTaskForm.action = "enviar";
+    createTaskForm.action = "submit";
     createTaskForm.classList.add("createTask");
   
     const titleInput = document.createElement("input");
@@ -61,12 +64,16 @@ const addNewTasks = (mainContent) => {
   
     const dateInput = document.createElement("input");
     dateInput.type = "date";
-    dateInput.classList.add("fecha");
+    dateInput.classList.add("date");
     dateInput.required = true;
   
     const addButton = document.createElement("button");
     addButton.type = "submit";
     addButton.textContent = "Agregar";
+    addButton.addEventListener("click", (e) => {
+        createNewToDo(titleInput, descriptionTextarea, dateInput, currentProject, e, mainContent);
+        closeDialogs(newTodoDialog, createTaskForm);
+    });
   
     const cancelButton = document.createElement("button");
     cancelButton.classList.add("cerrar");
@@ -106,7 +113,9 @@ const projectAddTask = (mainContent, input) => {
     mainContent.appendChild(projectTitle);
     mainContent.appendChild(addTask);
     addTask.addEventListener("click", () => {
-        addNewTasks(mainContent)});
+        addNewTasks(mainContent);
+        todayDate();
+    });
 }
     
 export {projects, createNewProject, addNewTasks, projectAddTask};
