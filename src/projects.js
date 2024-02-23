@@ -14,6 +14,8 @@ const newProjectDOM = (imput, parent) => {
     libutton.setAttribute("id", `${imput.value}project`);
     libutton.classList.add("projectLi");
 
+   // libutton.addEventListener("click", )
+
     const deleteProject = document.createElement("button");
     deleteProject.textContent = "🗑️";
     deleteProject.classList.add("deleteProject");
@@ -33,9 +35,9 @@ const createNewProject = (imput, parent, e) => {
 };
 
 const addNewTasks = (mainContent) => {
-  
     const newTodoDialog = document.createElement("div");
     newTodoDialog.classList.add("newTodoDialog");
+    newTodoDialog.style.width = "210px";
   
     const createTaskForm = document.createElement("form");
     createTaskForm.action = "enviar";
@@ -84,14 +86,27 @@ const addNewTasks = (mainContent) => {
     mainContent.appendChild(newTodoDialog);
   };  
 
+const deleteElements = (mainContent) => {
+    while (mainContent.firstChild) {
+        mainContent.removeChild(mainContent.firstChild);
+    }
+}
+
 const projectAddTask = (mainContent, input) => {
+    deleteElements(mainContent);
+
     const projectTitle = document.createElement("div");
-    projectTitle.textContent = input.textContent;
+    projectTitle.textContent = `${input.value}`;
     projectTitle.classList.add("projectTitle");
 
     const addTask = document.createElement("button");
     addTask.classList.add("newToDo");
-    addTask.addEventListener("click", addNewTasks(mainContent));
+    addTask.textContent= "+Add Task";
+
+    mainContent.appendChild(projectTitle);
+    mainContent.appendChild(addTask);
+    addTask.addEventListener("click", () => {
+        addNewTasks(mainContent)});
 }
     
 export {projects, createNewProject, addNewTasks, projectAddTask};

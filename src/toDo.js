@@ -19,6 +19,9 @@ const newTodoDOM = (titleImput, parent) => {
     const checkbox = document.createElement('input');
     checkbox.setAttribute('id', `${numberForId}cbtest-19`);
     checkbox.setAttribute('type', 'checkbox');
+    checkbox.addEventListener("change", () => {
+        taskDone(checkbox, taskName);
+    })
 
     const label = document.createElement('label');
     label.classList.add('check-box');
