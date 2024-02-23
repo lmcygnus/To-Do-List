@@ -63,8 +63,10 @@ const closeDialogs = (dialogs, forms) => {
 const taskDone = (myCheckbox, taskText) => {
     if (myCheckbox.checked) {
         taskText.style.textDecoration = "line-through"
+        taskText.style.color = "gray";
     } else {
         taskText.style.textDecoration = "none";
+        taskText.style.color = "rgb(0, 65, 119)";
     }
 };
 
