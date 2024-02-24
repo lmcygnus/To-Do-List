@@ -1,3 +1,5 @@
+import { setData,lookData } from "./localStorage";
+
 class ToDo {
     constructor(title, description, dueDate, project) {
         this.title = title;
@@ -47,7 +49,7 @@ const createNewToDo = (titleImput, descriptionImput, dueDateImput, currentProjec
         currentProject,
     )
     newTodoDOM(titleImput, parent);
-    console.log(newToDo);
+    setData(`${currentProject} task`, newToDo);
 }
 
 const todayDate = () => {

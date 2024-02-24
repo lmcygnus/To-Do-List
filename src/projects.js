@@ -1,12 +1,14 @@
-import { setData } from "./localStorage";
+import { setData, lookData } from "./localStorage";
 import { currentProject } from ".";
 import { createNewToDo, todayDate, closeDialogs } from "./toDo";
 
 class projects {
     constructor(project){
         this.project = project;
-    }  
-}
+    };
+};
+
+let projectsArray = [];
 
 const newProjectDOM = (imput, parent) => {
     const newProjectLi = document.createElement("li");
@@ -15,8 +17,6 @@ const newProjectDOM = (imput, parent) => {
     libutton.textContent = `${imput.value}`;
     libutton.setAttribute("id", `${imput.value}project`);
     libutton.classList.add("projectLi");
-
-   // libutton.addEventListener("click", )
 
     const deleteProject = document.createElement("button");
     deleteProject.textContent = "🗑️";
@@ -33,7 +33,9 @@ const createNewProject = (imput, parent, e) => {
         imput.value,
     );
     newProjectDOM(imput, parent);
-    //setData(`${imput.value} project`, newProject);
+    projectsArray.push(newProject);
+    console.log(projectsArray);
+    setData(`${imput.value} project`, projectsArray);
 };
 
 const addNewTasks = (mainContent) => {

@@ -2,6 +2,7 @@ import "./style.css";
 import "./checkbox.css"
 import {createNewProject, projectAddTask} from "./projects";
 import {createNewToDo, todayDate, taskDone } from "./toDo";
+import { lookData } from "./localStorage";
 
 const body = document.querySelector("body");
 const sidebar = document.querySelector(".sidebar");
