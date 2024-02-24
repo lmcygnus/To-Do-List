@@ -10,6 +10,7 @@ class ToDo {
 }
 
 let numberForId = 0;
+let toDoArray = 0;
 
 const newTodoDOM = (titleImput, parent) => {
     const toDoDiv = document.createElement("div");
@@ -47,10 +48,11 @@ const createNewToDo = (titleImput, descriptionImput, dueDateImput, currentProjec
         descriptionImput.value,
         dueDateImput.value,
         currentProject,
-    )
+    );
     newTodoDOM(titleImput, parent);
-    setData(`${currentProject} task`, newToDo);
-}
+    toDoArray.push(newToDo);
+    setData(`${titleImput.value} task`, toDoArray);
+};
 
 const todayDate = () => {
     let currentDate = new Date().toISOString().split('T')[0];

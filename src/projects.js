@@ -34,7 +34,6 @@ const createNewProject = (imput, parent, e) => {
     );
     newProjectDOM(imput, parent);
     projectsArray.push(newProject);
-    console.log(projectsArray);
     setData(`${imput.value} project`, projectsArray);
 };
 
