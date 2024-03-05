@@ -6,13 +6,15 @@ class ToDo {
         this.description = description;
         this.dueDate = dueDate;
         this.project = project;
-    }
+    };
 }
 
 let numberForId = 0;
-let toDoArray = 0;
+let toDoArray = lookData("tasks") || [];
 
 const newTodoDOM = (titleImput, parent) => {
+    numberForId ++;
+
     const toDoDiv = document.createElement("div");
     toDoDiv.classList.add("taskDiv");
 
@@ -22,6 +24,10 @@ const newTodoDOM = (titleImput, parent) => {
     const checkbox = document.createElement('input');
     checkbox.setAttribute('id', `${numberForId}cbtest-19`);
     checkbox.setAttribute('type', 'checkbox');
+
+    const taskName = document.createElement('div');
+    taskName.textContent = titleImput;
+
     checkbox.addEventListener("change", () => {
         taskDone(checkbox, taskName);
     })
@@ -29,9 +35,6 @@ const newTodoDOM = (titleImput, parent) => {
     const label = document.createElement('label');
     label.classList.add('check-box');
     label.setAttribute('for', `${numberForId}cbtest-19`);
-
-    const taskName = document.createElement('div');
-    taskName.textContent = titleImput.value;
 
     checkboxWrapper.appendChild(checkbox);
     checkboxWrapper.appendChild(label);
@@ -41,7 +44,6 @@ const newTodoDOM = (titleImput, parent) => {
 }
 
 const createNewToDo = (titleImput, descriptionImput, dueDateImput, currentProject, e, parent) => {
-    numberForId ++;
     e.preventDefault();
     const newToDo = new ToDo(
         titleImput.value,
@@ -49,9 +51,9 @@ const createNewToDo = (titleImput, descriptionImput, dueDateImput, currentProjec
         dueDateImput.value,
         currentProject,
     );
-    newTodoDOM(titleImput, parent);
+    newTodoDOM(titleImput.value, parent);
     toDoArray.push(newToDo);
-    setData(`${titleImput.value} task`, toDoArray);
+    setData(`tasks`, toDoArray);
 };
 
 const todayDate = () => {
@@ -74,4 +76,4 @@ const taskDone = (myCheckbox, taskText) => {
     }
 };
 
-export {ToDo, createNewToDo, todayDate, taskDone, closeDialogs};
+export {ToDo, createNewToDo, newTodoDOM, todayDate, taskDone, closeDialogs, toDoArray};

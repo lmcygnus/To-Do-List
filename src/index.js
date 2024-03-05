@@ -1,6 +1,6 @@
 import "./style.css";
 import "./checkbox.css"
-import {createNewProject, projectAddTask} from "./projects";
+import {createNewProject, newProjectDOM, projectAddTask, projectsArray} from "./projects";
 import {createNewToDo, todayDate, taskDone } from "./toDo";
 import { lookData } from "./localStorage";
 
@@ -46,11 +46,7 @@ newProjectBt.onclick = () => {
 
 cancel.onclick = () => {
   projectDialog.close();
-}
-
-document.addEventListener("DOMContentLoaded", (e) => {
-  createNewProject(newProjectBt, ul, e);
-})
+};
 
 projectForm.addEventListener("submit", (e) => {
   createNewProject(projectImput, ul, e);
@@ -70,6 +66,6 @@ taskForm.addEventListener("submit", (e) => {
   taskForm.reset();
 });
 
-export { currentProject }
+export { currentProject, mainContent}
 
   

@@ -1,6 +1,6 @@
 import { setData, lookData } from "./localStorage";
-import { currentProject } from ".";
-import { createNewToDo, todayDate, closeDialogs } from "./toDo";
+import { currentProject, mainContent } from ".";
+import { createNewToDo, newTodoDOM, todayDate, closeDialogs, toDoArray } from "./toDo";
 
 class projects {
     constructor(project){
@@ -8,15 +8,47 @@ class projects {
     };
 };
 
-let projectsArray = [];
+const deleteElements = (mainContent) => {
+    while (mainContent.firstChild) {
+        mainContent.removeChild(mainContent.firstChild);
+    }
+}
 
-const newProjectDOM = (imput, parent) => {
+let projectsArray = lookData("projects") || [];
+
+const filterTasks = (array, currentProject) => {
+    return array.filter(function(object) {
+        return object.project === currentProject;
+    });
+};
+
+const deleteTasks = () => {
+    const taskstoDelete = Array.from(document.querySelectorAll(".taskDiv"));
+    taskstoDelete.forEach(function(element) {
+        element.parentNode.removeChild(element);
+    });
+};
+
+const recoverObjects = (array, parent, functions) => {
+    array.forEach(element => {
+        functions(element.title, parent);
+    });
+};
+
+const newProjectDOM = (input, parent) => {
     const newProjectLi = document.createElement("li");
 
     const libutton = document.createElement("button");
-    libutton.textContent = `${imput.value}`;
-    libutton.setAttribute("id", `${imput.value}project`);
+    libutton.textContent = input.value;
+    libutton.setAttribute("id", `${input.value}project`);
     libutton.classList.add("projectLi");
+    libutton.addEventListener("click",  (event) => {
+        let currentProject = event.target.textContent;
+        let filteredTasks = filterTasks(toDoArray, currentProject);
+        console.log(filteredTasks);
+        deleteTasks();
+        recoverObjects(filteredTasks, mainContent, newTodoDOM);
+    });
 
     const deleteProject = document.createElement("button");
     deleteProject.textContent = "🗑️";
@@ -25,16 +57,21 @@ const newProjectDOM = (imput, parent) => {
     newProjectLi.appendChild(libutton);
     newProjectLi.appendChild(deleteProject);
     parent.appendChild(newProjectLi);
-}
+};
 
-const createNewProject = (imput, parent, e) => {
+const createNewProject = (input, parent, e) => {
     e.preventDefault();
-    const newProject = new projects (
-        imput.value,
-    );
-    newProjectDOM(imput, parent);
-    projectsArray.push(newProject);
-    setData(`${imput.value} project`, projectsArray);
+    if(projectsArray.some(object => object.project === input.value)) {
+        alert("ERROR");
+    }
+    else {
+        const newProject = new projects (
+            input.value,
+        );
+        newProjectDOM(input, parent);
+        projectsArray.push(newProject);
+        setData("projects", projectsArray);
+    }
 };
 
 const addNewTasks = (mainContent) => {
@@ -61,7 +98,7 @@ const addNewTasks = (mainContent) => {
     descriptionTextarea.placeholder = "Descripción";
   
     const dateLabel = document.createElement("label");
-    dateLabel.textContent = "Fecha de vencimiento:";
+    dateLabel.textContent = "Due Date:";
   
     const dateInput = document.createElement("input");
     dateInput.type = "date";
@@ -94,30 +131,29 @@ const addNewTasks = (mainContent) => {
     mainContent.appendChild(newTodoDialog);
   };  
 
-const deleteElements = (mainContent) => {
-    while (mainContent.firstChild) {
-        mainContent.removeChild(mainContent.firstChild);
-    }
-}
-
 const projectAddTask = (mainContent, input) => {
-    deleteElements(mainContent);
+    if(projectsArray.some(object => object.project === input.value)) {
+        alert("ERROR");
+    }
+    else {
+        deleteElements(mainContent);
 
-    const projectTitle = document.createElement("div");
-    projectTitle.textContent = `${input.value}`;
-    projectTitle.classList.add("projectTitle");
+        const projectTitle = document.createElement("div");
+        projectTitle.textContent = `${input.value}`;
+        projectTitle.classList.add("projectTitle");
 
-    const addTask = document.createElement("button");
-    addTask.classList.add("newToDo");
-    addTask.textContent= "+Add Task";
+        const addTask = document.createElement("button");
+        addTask.classList.add("newToDo");
+        addTask.textContent= "+Add Task";
 
-    mainContent.appendChild(projectTitle);
-    mainContent.appendChild(addTask);
-    addTask.addEventListener("click", () => {
-        addNewTasks(mainContent);
-        todayDate();
-    });
-}
+        mainContent.appendChild(projectTitle);
+        mainContent.appendChild(addTask);
+        addTask.addEventListener("click", () => {
+            addNewTasks(mainContent);
+            todayDate();
+        });
+    };
+};
     
-export {projects, createNewProject, addNewTasks, projectAddTask};
+export {projects, createNewProject, newProjectDOM, addNewTasks, projectAddTask, filterTasks, projectsArray};
 
