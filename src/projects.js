@@ -1,6 +1,6 @@
 import { setData, lookData } from "./localStorage";
 import { currentProject, mainContent } from ".";
-import { createNewToDo, newTodoDOM, todayDate, closeDialogs, toDoArray } from "./toDo";
+import { createNewToDo, newTodoDOM, todayDate, closeDialogs, toDoArray, addNewTasks } from "./toDo";
 
 class projects {
     constructor(project){
@@ -29,25 +29,28 @@ const deleteTasks = () => {
     });
 };
 
-const recoverObjects = (array, parent, functions) => {
+const recoverObjects = (array, parent, functions, propertyName) => {
     array.forEach(element => {
-        functions(element.title, parent);
+        functions(element[propertyName], parent, propertyName);
     });
 };
 
-const newProjectDOM = (input, parent) => {
+const newProjectDOM = (input, parent, propertyName) => {
     const newProjectLi = document.createElement("li");
 
     const libutton = document.createElement("button");
-    libutton.textContent = input.value;
-    libutton.setAttribute("id", `${input.value}project`);
+    libutton.textContent = input[propertyName];
     libutton.classList.add("projectLi");
+
+    const newPropertyName = "title"; 
+
     libutton.addEventListener("click",  (event) => {
         let currentProject = event.target.textContent;
         let filteredTasks = filterTasks(toDoArray, currentProject);
-        console.log(filteredTasks);
         deleteTasks();
-        recoverObjects(filteredTasks, mainContent, newTodoDOM);
+        recoverObjects(filteredTasks, mainContent, newTodoDOM, newPropertyName);
+        const projectTitleDiv = document.querySelector(".projectTitle");
+        projectTitleDiv.textContent = currentProject;
     });
 
     const deleteProject = document.createElement("button");
@@ -59,6 +62,32 @@ const newProjectDOM = (input, parent) => {
     parent.appendChild(newProjectLi);
 };
 
+const projectAddTask = (mainContent, input, propertyName) => {
+    deleteElements(mainContent);
+
+    const projectTitle = document.createElement("div");
+ 
+    if (propertyName === 'value') {
+        projectTitle.textContent = `${input.value}`;
+    } 
+    else if (propertyName === 'textContent') {
+        projectTitle.textContent = `${input.textContent}`;
+    }
+
+    projectTitle.classList.add("projectTitle");
+
+    const addTask = document.createElement("button");
+    addTask.classList.add("newToDo");
+    addTask.textContent= "+Add Task";
+
+    mainContent.appendChild(projectTitle);
+    mainContent.appendChild(addTask);
+    addTask.addEventListener("click", () => {
+        addNewTasks(mainContent);
+        todayDate();
+    });
+};
+
 const createNewProject = (input, parent, e) => {
     e.preventDefault();
     if(projectsArray.some(object => object.project === input.value)) {
@@ -68,92 +97,13 @@ const createNewProject = (input, parent, e) => {
         const newProject = new projects (
             input.value,
         );
-        newProjectDOM(input, parent);
+        const newProperty = "value";
+        projectAddTask(mainContent, input, newProperty);
+        newProjectDOM(input, parent, newProperty);
         projectsArray.push(newProject);
         setData("projects", projectsArray);
     }
-};
-
-const addNewTasks = (mainContent) => {
-    const newTodoDialog = document.createElement("dialog");
-    newTodoDialog.classList.add("newTodoDialog");
-    newTodoDialog.style.width = "210px";
-    newTodoDialog.open = true;
-  
-    const createTaskForm = document.createElement("form");
-    createTaskForm.action = "submit";
-    createTaskForm.classList.add("createTask");
-  
-    const titleInput = document.createElement("input");
-    titleInput.type = "text";
-    titleInput.classList.add("title");
-    titleInput.required = true;
-    titleInput.placeholder = "Nombre";
-  
-    const descriptionTextarea = document.createElement("textarea");
-    descriptionTextarea.name = "descripción";
-    descriptionTextarea.classList.add("description");
-    descriptionTextarea.cols = "20";
-    descriptionTextarea.rows = "2";
-    descriptionTextarea.placeholder = "Descripción";
-  
-    const dateLabel = document.createElement("label");
-    dateLabel.textContent = "Due Date:";
-  
-    const dateInput = document.createElement("input");
-    dateInput.type = "date";
-    dateInput.classList.add("date");
-    dateInput.required = true;
-  
-    const addButton = document.createElement("button");
-    addButton.type = "submit";
-    addButton.textContent = "Agregar";
-    addButton.addEventListener("click", (e) => {
-        createNewToDo(titleInput, descriptionTextarea, dateInput, currentProject, e, mainContent);
-        closeDialogs(newTodoDialog, createTaskForm);
-    });
-  
-    const cancelButton = document.createElement("button");
-    cancelButton.classList.add("cerrar");
-    cancelButton.type = "button";
-    cancelButton.textContent = "Cancelar";
-  
-    dateLabel.appendChild(dateInput);
-    createTaskForm.appendChild(titleInput);
-    createTaskForm.appendChild(descriptionTextarea);
-    createTaskForm.appendChild(document.createElement("br"));
-    createTaskForm.appendChild(dateLabel);
-    createTaskForm.appendChild(document.createElement("br"));
-    createTaskForm.appendChild(addButton);
-    createTaskForm.appendChild(cancelButton);
-  
-    newTodoDialog.appendChild(createTaskForm);
-    mainContent.appendChild(newTodoDialog);
-  };  
-
-const projectAddTask = (mainContent, input) => {
-    if(projectsArray.some(object => object.project === input.value)) {
-        alert("ERROR");
-    }
-    else {
-        deleteElements(mainContent);
-
-        const projectTitle = document.createElement("div");
-        projectTitle.textContent = `${input.value}`;
-        projectTitle.classList.add("projectTitle");
-
-        const addTask = document.createElement("button");
-        addTask.classList.add("newToDo");
-        addTask.textContent= "+Add Task";
-
-        mainContent.appendChild(projectTitle);
-        mainContent.appendChild(addTask);
-        addTask.addEventListener("click", () => {
-            addNewTasks(mainContent);
-            todayDate();
-        });
-    };
-};
+}; 
     
-export {projects, createNewProject, newProjectDOM, addNewTasks, projectAddTask, filterTasks, projectsArray};
+export {projects, createNewProject, newProjectDOM, addNewTasks, projectAddTask, filterTasks, projectsArray, recoverObjects};
 

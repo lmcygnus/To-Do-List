@@ -76,4 +76,61 @@ const taskDone = (myCheckbox, taskText) => {
     }
 };
 
-export {ToDo, createNewToDo, newTodoDOM, todayDate, taskDone, closeDialogs, toDoArray};
+const addNewTasks = (mainContent) => {
+    const newTodoDialog = document.createElement("dialog");
+    newTodoDialog.classList.add("newTodoDialog");
+    newTodoDialog.style.width = "210px";
+    newTodoDialog.open = true;
+  
+    const createTaskForm = document.createElement("form");
+    createTaskForm.action = "submit";
+    createTaskForm.classList.add("createTask");
+  
+    const titleInput = document.createElement("input");
+    titleInput.type = "text";
+    titleInput.classList.add("title");
+    titleInput.required = true;
+    titleInput.placeholder = "Nombre";
+  
+    const descriptionTextarea = document.createElement("textarea");
+    descriptionTextarea.name = "descripción";
+    descriptionTextarea.classList.add("description");
+    descriptionTextarea.cols = "20";
+    descriptionTextarea.rows = "2";
+    descriptionTextarea.placeholder = "Descripción";
+  
+    const dateLabel = document.createElement("label");
+    dateLabel.textContent = "Due Date:";
+  
+    const dateInput = document.createElement("input");
+    dateInput.type = "date";
+    dateInput.classList.add("date");
+    dateInput.required = true;
+  
+    const addButton = document.createElement("button");
+    addButton.type = "submit";
+    addButton.textContent = "Agregar";
+    addButton.addEventListener("click", (e) => {
+        createNewToDo(titleInput, descriptionTextarea, dateInput, currentProject, e, mainContent);
+        closeDialogs(newTodoDialog, createTaskForm);
+    });
+  
+    const cancelButton = document.createElement("button");
+    cancelButton.classList.add("cerrar");
+    cancelButton.type = "button";
+    cancelButton.textContent = "Cancelar";
+  
+    dateLabel.appendChild(dateInput);
+    createTaskForm.appendChild(titleInput);
+    createTaskForm.appendChild(descriptionTextarea);
+    createTaskForm.appendChild(document.createElement("br"));
+    createTaskForm.appendChild(dateLabel);
+    createTaskForm.appendChild(document.createElement("br"));
+    createTaskForm.appendChild(addButton);
+    createTaskForm.appendChild(cancelButton);
+  
+    newTodoDialog.appendChild(createTaskForm);
+    mainContent.appendChild(newTodoDialog);
+  }; 
+
+export {ToDo, createNewToDo, newTodoDOM, todayDate, taskDone, closeDialogs, toDoArray, addNewTasks};
