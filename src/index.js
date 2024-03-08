@@ -1,8 +1,8 @@
 import "./style.css";
 import "./checkbox.css"
-import {createNewProject, newProjectDOM, projectAddTask, projectsArray, recoverObjects} from "./projects";
+import {createNewProject, newProjectDOM, projectAddTask, projects, projectsArray, recoverObjects} from "./projects";
 import {createNewToDo, todayDate, taskDone } from "./toDo";
-import { lookData } from "./localStorage";
+import { lookData, setData } from "./localStorage";
 
 const body = document.querySelector("body");
 const sidebar = document.querySelector(".sidebar");
@@ -55,9 +55,21 @@ cancel.onclick = () => {
   projectAddTask(mainContent, projectName);
 }); */
 
+document.addEventListener("DOMContentLoaded", () => {
+  const propertyName = "project";
+  const defaultProject = lookData("defaultProject");
+  projectAddTask(mainContent, defaultProject, propertyName)
+  newProjectDOM(defaultProject, ul, propertyName);
+  if(!defaultProject) {
+    const defaultProject = new projects("defaultProject");
+    projectsArray.push(defaultProject);
+    setData("defaultProject", defaultProject);
+    newProjectDOM(defaultProject, ul, propertyName);
+  }
+});
+
 projectForm.addEventListener("submit", (e) => {
   createNewProject(projectImput, ul, e);
-  currentProject = projectImput.value;
   projectForm.reset();
   projectDialog.close();
 });

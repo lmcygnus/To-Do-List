@@ -45,7 +45,7 @@ const newProjectDOM = (input, parent, propertyName) => {
     const newPropertyName = "title"; 
 
     libutton.addEventListener("click",  (event) => {
-        let currentProject = event.target.textContent;
+        currentProject = event.target.textContent;
         let filteredTasks = filterTasks(toDoArray, currentProject);
         deleteTasks();
         recoverObjects(filteredTasks, mainContent, newTodoDOM, newPropertyName);
@@ -74,6 +74,9 @@ const projectAddTask = (mainContent, input, propertyName) => {
     else if (propertyName === 'textContent') {
         projectTitle.textContent = `${input.textContent}`;
     }
+    else if (propertyName === "project") {
+        projectTitle.textContent = `${input.project}`
+    }
 
     projectTitle.classList.add("projectTitle");
 
@@ -83,7 +86,8 @@ const projectAddTask = (mainContent, input, propertyName) => {
 
     mainContent.appendChild(projectTitle);
     mainContent.appendChild(addTask);
-    addTask.addEventListener("click", () => {
+    addTask.addEventListener("click", (e) => {
+        e.preventDefault();
         addNewTasks(mainContent);
         todayDate();
     });

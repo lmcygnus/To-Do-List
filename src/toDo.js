@@ -1,4 +1,5 @@
 import { setData,lookData } from "./localStorage";
+import { currentProject } from ".";
 
 class ToDo {
     constructor(title, description, dueDate, project) {
@@ -127,6 +128,12 @@ const addNewTasks = (mainContent) => {
     const createTaskForm = document.createElement("form");
     createTaskForm.action = "submit";
     createTaskForm.classList.add("createTask");
+
+    createTaskForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        createNewToDo(titleInput, descriptionTextarea, dateInput, currentProject, e, mainContent);
+        closeDialogs(newTodoDialog, createTaskForm);
+    });
   
     const titleInput = document.createElement("input");
     titleInput.type = "text";
@@ -152,10 +159,6 @@ const addNewTasks = (mainContent) => {
     const addButton = document.createElement("button");
     addButton.type = "submit";
     addButton.textContent = "Agregar";
-    addButton.addEventListener("click", (e) => {
-        createNewToDo(titleInput, descriptionTextarea, dateInput, currentProject, e, mainContent);
-        closeDialogs(newTodoDialog, createTaskForm);
-    });
   
     const cancelButton = document.createElement("button");
     cancelButton.classList.add("cerrar");
