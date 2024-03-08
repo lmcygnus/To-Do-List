@@ -51,7 +51,8 @@ const newProjectDOM = (input, parent, propertyName) => {
         recoverObjects(filteredTasks, mainContent, newTodoDOM, newPropertyName);
         const projectTitleDiv = document.querySelector(".projectTitle");
         projectTitleDiv.textContent = currentProject;
-    });
+        }
+    );
 
     const deleteProject = document.createElement("button");
     deleteProject.textContent = "🗑️";

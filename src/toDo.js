@@ -7,16 +7,38 @@ class ToDo {
         this.dueDate = dueDate;
         this.project = project;
     };
-}
+};
+
+const seeDetails = (parent) => {
+    const detailsDiv = document.createElement("div");
+    detailsDiv.classList.add("Details");
+
+    const title = document.createElement("div");
+    title.classList.add("detailsTitle");
+
+    const description = document.createElement("div");
+    description.classList.add("descriptionDetails");
+    
+    const dueDate = document.createElement("div");
+    dueDate.classList.add("duedateDescription");
+
+    detailsDiv.appendChild(title);
+    detailsDiv.appendChild(description);
+    detailsDiv.appendChild(dueDate);
+    parent.appendChild(detailsDiv);
+};
 
 let numberForId = 0;
 let toDoArray = lookData("tasks") || [];
 
-const newTodoDOM = (titleImput, parent) => {
+const newTodoDOM = (titleImput, descriptionImput, dateInput,  parent) => {
     numberForId ++;
 
     const toDoDiv = document.createElement("div");
     toDoDiv.classList.add("taskDiv");
+
+    const todoContainer = document.createElement("div");
+    todoContainer.classList.add("todoContainer");
 
     const checkboxWrapper = document.createElement('div');
     checkboxWrapper.classList.add('checkbox-wrapper-19');
@@ -36,12 +58,32 @@ const newTodoDOM = (titleImput, parent) => {
     label.classList.add('check-box');
     label.setAttribute('for', `${numberForId}cbtest-19`);
 
+    const seeDetailsbt = document.createElement("button");
+    seeDetailsbt.classList.add("seeDetails");
+    seeDetailsbt.textContent = "▼";
+
+    seeDetailsbt.addEventListener("click", (event) => {
+        const toDoDiv = event.currentTarget.closest('.taskDiv');
+        const descriptionDiv = toDoDiv.querySelector(".descriptionDetails");
+        const dateDiv = toDoDiv.querySelector(".duedateDescription");
+
+        descriptionDiv.textContent = `Description: ${descriptionImput}`;
+        dateDiv.textContent = `Due Date: ${dateInput}`;
+
+        const detailsContainer = toDoDiv.querySelector('.Details');
+        detailsContainer.style.display = (detailsContainer.style.display === 'none' || detailsContainer.style.display === '') ? 'block' : 'none';
+    });
+    
     checkboxWrapper.appendChild(checkbox);
     checkboxWrapper.appendChild(label);
-    toDoDiv.appendChild(checkboxWrapper);
-    toDoDiv.appendChild(taskName);
+    todoContainer.appendChild(checkboxWrapper);
+    todoContainer.appendChild(taskName);
+    todoContainer.appendChild(seeDetailsbt);
+    toDoDiv.appendChild(todoContainer);
+    seeDetails(toDoDiv);
+
     parent.appendChild(toDoDiv);
-}
+};
 
 const createNewToDo = (titleImput, descriptionImput, dueDateImput, currentProject, e, parent) => {
     e.preventDefault();
@@ -51,7 +93,7 @@ const createNewToDo = (titleImput, descriptionImput, dueDateImput, currentProjec
         dueDateImput.value,
         currentProject,
     );
-    newTodoDOM(titleImput.value, parent);
+    newTodoDOM(titleImput.value, descriptionImput.value, dueDateImput.value,  parent);
     toDoArray.push(newToDo);
     setData(`tasks`, toDoArray);
 };

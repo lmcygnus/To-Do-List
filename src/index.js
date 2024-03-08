@@ -48,12 +48,12 @@ cancel.onclick = () => {
   projectDialog.close();
 };
 
-document.addEventListener("DOMContentLoaded", (event) => {
+/*document.addEventListener("DOMContentLoaded", (event) => {
   const projectProperty = "project";
   recoverObjects(projectsArray, ul, newProjectDOM, projectProperty);
   const projectName = event.target.textContent;
   projectAddTask(mainContent, projectName);
-});
+}); */
 
 projectForm.addEventListener("submit", (e) => {
   createNewProject(projectImput, ul, e);

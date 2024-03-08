@@ -97,6 +97,7 @@ button {
     padding: 10px;
     border-radius: 10px;
     display: flex;
+    flex-direction: column;
     font-size: 1.5em;
     gap: 20px;
     align-items: center;
@@ -126,3 +127,12 @@ button {
     width: 50%;
 }
 
+.Details {
+    display: none;
+    border: 1px dashed red;
+}
+
+.todoContainer {
+    display: flex;
+    justify-content: space-evenly;
+}
