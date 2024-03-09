@@ -1,6 +1,8 @@
 import { setData, lookData } from "./localStorage";
-import { currentProject, mainContent } from ".";
+import { mainContent } from ".";
 import { createNewToDo, newTodoDOM, todayDate, closeDialogs, toDoArray, addNewTasks } from "./toDo";
+
+let currentProject = "Default";
 
 class projects {
     constructor(project){
@@ -29,11 +31,17 @@ const deleteTasks = () => {
     });
 };
 
-const recoverObjects = (array, parent, functions, propertyName) => {
+const recoverProjects = (array, parent, propertyName) => {
     array.forEach(element => {
-        functions(element[propertyName], parent, propertyName);
+        newProjectDOM(element, parent, propertyName);
     });
 };
+
+const recoverTasks = (array, titleProperty, descriptionProperty, dateProperty, mainContent) => {
+    array.forEach(element => {
+        newTodoDOM(element[titleProperty], element[descriptionProperty], element[dateProperty], mainContent);
+    });
+}
 
 const newProjectDOM = (input, parent, propertyName) => {
     const newProjectLi = document.createElement("li");
@@ -42,13 +50,15 @@ const newProjectDOM = (input, parent, propertyName) => {
     libutton.textContent = input[propertyName];
     libutton.classList.add("projectLi");
 
-    const newPropertyName = "title"; 
+    const titleProperty = "title"; 
+    const descriptionProperty = "description";
+    const dateProperty = "dueDate";
 
     libutton.addEventListener("click",  (event) => {
         currentProject = event.target.textContent;
         let filteredTasks = filterTasks(toDoArray, currentProject);
         deleteTasks();
-        recoverObjects(filteredTasks, mainContent, newTodoDOM, newPropertyName);
+        recoverTasks(filteredTasks, titleProperty, descriptionProperty, dateProperty, mainContent)
         const projectTitleDiv = document.querySelector(".projectTitle");
         projectTitleDiv.textContent = currentProject;
         }
@@ -75,7 +85,7 @@ const projectAddTask = (mainContent, input, propertyName) => {
         projectTitle.textContent = `${input.textContent}`;
     }
     else if (propertyName === "project") {
-        projectTitle.textContent = `${input.project}`
+        projectTitle.textContent = `${input[propertyName]}`
     }
 
     projectTitle.classList.add("projectTitle");
@@ -110,5 +120,5 @@ const createNewProject = (input, parent, e) => {
     }
 }; 
     
-export {projects, createNewProject, newProjectDOM, addNewTasks, projectAddTask, filterTasks, projectsArray, recoverObjects};
+export {projects, createNewProject, newProjectDOM, addNewTasks, projectAddTask, filterTasks, projectsArray, recoverProjects, currentProject};
 

@@ -1,6 +1,6 @@
 import "./style.css";
 import "./checkbox.css"
-import {createNewProject, newProjectDOM, projectAddTask, projects, projectsArray, recoverObjects} from "./projects";
+import {createNewProject, filterTasks, newProjectDOM, projectAddTask, projects, projectsArray, recoverObjects, recoverProjects} from "./projects";
 import {createNewToDo, todayDate, taskDone } from "./toDo";
 import { lookData, setData } from "./localStorage";
 
@@ -20,7 +20,6 @@ const projectDialog = document.querySelector(".projectDialog");
 const ul = document.querySelector("ul");
 const projectImput = document.querySelector("#NewProjectImput");
 const projectForm = document.querySelector("#Project");
-let currentProject = "Default";
 const acceptBt = document.querySelector(".accept");
 
 //New to do variables
@@ -48,23 +47,18 @@ cancel.onclick = () => {
   projectDialog.close();
 };
 
-/*document.addEventListener("DOMContentLoaded", (event) => {
-  const projectProperty = "project";
-  recoverObjects(projectsArray, ul, newProjectDOM, projectProperty);
-  const projectName = event.target.textContent;
-  projectAddTask(mainContent, projectName);
-}); */
-
 document.addEventListener("DOMContentLoaded", () => {
-  const propertyName = "project";
-  const defaultProject = lookData("defaultProject");
-  projectAddTask(mainContent, defaultProject, propertyName)
-  newProjectDOM(defaultProject, ul, propertyName);
+  const projectProperty = "project";
+  const defaultProjectName = " Default";
+  const defaultProject = filterTasks(projectsArray, defaultProjectName);
+  recoverProjects(projectsArray, ul, projectProperty);
+  projectAddTask(mainContent, defaultProject, projectProperty)
+  newProjectDOM(defaultProject, ul, projectProperty);
   if(!defaultProject) {
-    const defaultProject = new projects("defaultProject");
+    const defaultProject = new projects("Default");
     projectsArray.push(defaultProject);
-    setData("defaultProject", defaultProject);
-    newProjectDOM(defaultProject, ul, propertyName);
+    setData("project", defaultProject);
+    newProjectDOM(defaultProject, ul, projectProperty);
   }
 });
 
@@ -84,6 +78,6 @@ taskForm.addEventListener("submit", (e) => {
   taskForm.reset();
 });
 
-export { currentProject, mainContent}
+export {mainContent}
 
   

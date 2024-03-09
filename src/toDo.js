@@ -1,5 +1,5 @@
 import { setData,lookData } from "./localStorage";
-import { currentProject } from ".";
+import { currentProject } from "./projects";
 
 class ToDo {
     constructor(title, description, dueDate, project) {
