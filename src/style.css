@@ -97,10 +97,9 @@ button {
     padding: 10px;
     border-radius: 10px;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     font-size: 1.5em;
     gap: 20px;
-    align-items: center;
     width: 50%;
 }
 .deleteProject:hover {
@@ -123,16 +122,17 @@ button {
     border-radius: 20px;
     padding: 10px;
     display: flex;
-    justify-content: center;
     width: 50%;
 }
 
 .Details {
     display: none;
-    border: 1px dashed red;
+    font-size: 16px;
+    border-top: 1px solid #919191;
 }
 
 .todoContainer {
     display: flex;
-    justify-content: space-evenly;
+    gap: 10px;
 }
+

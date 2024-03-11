@@ -58,6 +58,7 @@ const newProjectDOM = (input, parent, propertyName) => {
         currentProject = event.target.textContent;
         let filteredTasks = filterTasks(toDoArray, currentProject);
         deleteTasks();
+        projectAddTask(mainContent, input, titleProperty);
         recoverTasks(filteredTasks, titleProperty, descriptionProperty, dateProperty, mainContent)
         const projectTitleDiv = document.querySelector(".projectTitle");
         projectTitleDiv.textContent = currentProject;

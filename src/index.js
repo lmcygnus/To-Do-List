@@ -52,8 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const defaultProjectName = " Default";
   const defaultProject = filterTasks(projectsArray, defaultProjectName);
   recoverProjects(projectsArray, ul, projectProperty);
-  projectAddTask(mainContent, defaultProject, projectProperty)
-  newProjectDOM(defaultProject, ul, projectProperty);
   if(!defaultProject) {
     const defaultProject = new projects("Default");
     projectsArray.push(defaultProject);

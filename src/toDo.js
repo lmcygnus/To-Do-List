@@ -11,7 +11,7 @@ class ToDo {
 };
 
 const seeDetails = (parent) => {
-    const detailsDiv = document.createElement("div");
+    const detailsDiv = document.createElement("dialog");
     detailsDiv.classList.add("Details");
 
     const title = document.createElement("div");
@@ -22,6 +22,8 @@ const seeDetails = (parent) => {
     
     const dueDate = document.createElement("div");
     dueDate.classList.add("duedateDescription");
+
+    const closeDetails = document.createElement("")
 
     detailsDiv.appendChild(title);
     detailsDiv.appendChild(description);
@@ -37,6 +39,12 @@ const newTodoDOM = (titleImput, descriptionImput, dateInput,  parent) => {
 
     const toDoDiv = document.createElement("div");
     toDoDiv.classList.add("taskDiv");
+
+    const container = document.createElement("div");
+    container.classList.add("container1");
+
+    const container2 = document.createElement("div");
+    container2.classList.add("container2");
 
     const todoContainer = document.createElement("div");
     todoContainer.classList.add("todoContainer");
@@ -62,6 +70,7 @@ const newTodoDOM = (titleImput, descriptionImput, dateInput,  parent) => {
     const seeDetailsbt = document.createElement("button");
     seeDetailsbt.classList.add("seeDetails");
     seeDetailsbt.textContent = "▼";
+    seeDetails(toDoDiv);
 
     seeDetailsbt.addEventListener("click", (event) => {
         const toDoDiv = event.currentTarget.closest('.taskDiv');
@@ -71,17 +80,19 @@ const newTodoDOM = (titleImput, descriptionImput, dateInput,  parent) => {
         descriptionDiv.textContent = `Description: ${descriptionImput}`;
         dateDiv.textContent = `Due Date: ${dateInput}`;
 
-        const detailsContainer = toDoDiv.querySelector('.Details');
-        detailsContainer.style.display = (detailsContainer.style.display === 'none' || detailsContainer.style.display === '') ? 'block' : 'none';
+        const detailsDialog = document.querySelector(".Details");
+        detailsDialog.style.display = "block";
+        detailsDialog.show();
+
     });
     
     checkboxWrapper.appendChild(checkbox);
     checkboxWrapper.appendChild(label);
     todoContainer.appendChild(checkboxWrapper);
     todoContainer.appendChild(taskName);
-    todoContainer.appendChild(seeDetailsbt);
+    container2.appendChild(seeDetailsbt);
     toDoDiv.appendChild(todoContainer);
-    seeDetails(toDoDiv);
+    toDoDiv.appendChild(container2);
 
     parent.appendChild(toDoDiv);
 };
