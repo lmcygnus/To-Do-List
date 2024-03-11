@@ -107,7 +107,7 @@ const projectAddTask = (mainContent, input, propertyName) => {
 const createNewProject = (input, parent, e) => {
     e.preventDefault();
     if(projectsArray.some(object => object.project === input.value)) {
-        alert("ERROR");
+        return;
     }
     else {
         const newProject = new projects (

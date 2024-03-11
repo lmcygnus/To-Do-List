@@ -47,16 +47,16 @@ cancel.onclick = () => {
   projectDialog.close();
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", (e) => {
   const projectProperty = "project";
+  recoverProjects(projectsArray, ul, projectProperty);
+
   const defaultProjectName = " Default";
   const defaultProject = filterTasks(projectsArray, defaultProjectName);
-  recoverProjects(projectsArray, ul, projectProperty);
-  if(!defaultProject) {
-    const defaultProject = new projects("Default");
-    projectsArray.push(defaultProject);
-    setData("project", defaultProject);
-    newProjectDOM(defaultProject, ul, projectProperty);
+  console.log(defaultProject);
+  if(defaultProject.length === 0) {
+    const defaultImput = document.querySelector("#newProject");
+    createNewProject(defaultImput, ul, e);
   }
 });
 

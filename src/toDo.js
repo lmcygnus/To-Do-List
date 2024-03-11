@@ -11,8 +11,8 @@ class ToDo {
 };
 
 const seeDetails = (parent) => {
-    const detailsDiv = document.createElement("dialog");
-    detailsDiv.classList.add("Details");
+    const detailsDi = document.createElement("dialog");
+    detailsDi.classList.add("Details");
 
     const title = document.createElement("div");
     title.classList.add("detailsTitle");
@@ -23,12 +23,19 @@ const seeDetails = (parent) => {
     const dueDate = document.createElement("div");
     dueDate.classList.add("duedateDescription");
 
-    const closeDetails = document.createElement("")
+    const closeDetails = document.createElement("button");
+    closeDetails.textContent = "Close";
+    closeDetails.addEventListener("click", () => {
+        detailsDi.close();
+    })
 
-    detailsDiv.appendChild(title);
-    detailsDiv.appendChild(description);
-    detailsDiv.appendChild(dueDate);
-    parent.appendChild(detailsDiv);
+    detailsDi.appendChild(title);
+    detailsDi.appendChild(description);
+    detailsDi.appendChild(dueDate);
+    detailsDi.appendChild(closeDetails);
+    parent.appendChild(detailsDi);
+
+    return detailsDi;
 };
 
 let numberForId = 0;
@@ -70,7 +77,8 @@ const newTodoDOM = (titleImput, descriptionImput, dateInput,  parent) => {
     const seeDetailsbt = document.createElement("button");
     seeDetailsbt.classList.add("seeDetails");
     seeDetailsbt.textContent = "▼";
-    seeDetails(toDoDiv);
+
+    const detailsDialog = seeDetails(toDoDiv);
 
     seeDetailsbt.addEventListener("click", (event) => {
         const toDoDiv = event.currentTarget.closest('.taskDiv');
@@ -80,10 +88,7 @@ const newTodoDOM = (titleImput, descriptionImput, dateInput,  parent) => {
         descriptionDiv.textContent = `Description: ${descriptionImput}`;
         dateDiv.textContent = `Due Date: ${dateInput}`;
 
-        const detailsDialog = document.querySelector(".Details");
-        detailsDialog.style.display = "block";
-        detailsDialog.show();
-
+        detailsDialog.showModal();
     });
     
     checkboxWrapper.appendChild(checkbox);
@@ -184,7 +189,6 @@ const addNewTasks = (mainContent) => {
     createTaskForm.appendChild(document.createElement("br"));
     createTaskForm.appendChild(addButton);
     createTaskForm.appendChild(cancelButton);
-  
     newTodoDialog.appendChild(createTaskForm);
     mainContent.appendChild(newTodoDialog);
   }; 
