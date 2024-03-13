@@ -140,6 +140,10 @@ const showTodayTasks = () => {
         let todayTasks = filterTasks(toDoArray, currentDate, dateProperty);
         console.log(todayTasks);
         recoverTasks(todayTasks, titleProperty, descriptionProperty, dateProperty, mainContent);
+        const projectTitleDiv = document.querySelector(".projectTitle");
+        projectTitleDiv.textContent = "Today";
+        const addTaskButton = document.querySelector(".newToDo");
+        addTaskButton.style.display = "none";
     });
 };
 

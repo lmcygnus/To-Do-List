@@ -53,28 +53,6 @@ const newProjectDOM = (input, parent, propertyName) => {
     libutton.textContent = input[propertyName];
     libutton.classList.add("projectLi");
 
-    let filteredTasks;
-
-    libutton.addEventListener("click",  (event) => {
-        currentProject = event.target.textContent;
-        if(currentProject === "All") {
-            let tasks = lookData("tasks");
-            deleteTasks();
-            projectAddTask(mainContent, input, titleProperty);
-            recoverTasks(tasks, titleProperty, descriptionProperty, dateProperty, mainContent);
-            const projectTitleDiv = document.querySelector(".projectTitle");
-            projectTitleDiv.textContent = currentProject;
-        } else {
-            const projectProperty = "project";
-            filteredTasks = filterTasks(toDoArray, currentProject, projectProperty);
-            deleteTasks();
-            projectAddTask(mainContent, input, titleProperty);
-            recoverTasks(filteredTasks, titleProperty, descriptionProperty, dateProperty, mainContent)
-            const projectTitleDiv = document.querySelector(".projectTitle");
-            projectTitleDiv.textContent = currentProject;
-        };
-    });
-
     const deleteProject = document.createElement("button");
     deleteProject.textContent = "🗑️";
     deleteProject.classList.add("deleteProject");
@@ -86,7 +64,30 @@ const newProjectDOM = (input, parent, propertyName) => {
         deleteFromLocalStorage(projectsArray, projectProperty, libutton.textContent, setName);
         deleteFromLocalStorage(toDoArray, projectProperty, libutton.textContent, setName2)
         parent.removeChild(newProjectLi);
-    })
+    });
+
+    let filteredTasks;
+
+    libutton.addEventListener("click",  (event) => {
+        currentProject = event.target.textContent;
+        if(currentProject === "All") {
+            let tasks = lookData("tasks");
+            deleteTasks();
+            projectAddTask(mainContent, input, titleProperty);
+            recoverTasks(tasks, titleProperty, descriptionProperty, dateProperty, mainContent);
+            const projectTitleDiv = document.querySelector(".projectTitle");
+            projectTitleDiv.textContent = currentProject;
+            newProjectLi.removeChild(deleteProject);
+        } else {
+            const projectProperty = "project";
+            filteredTasks = filterTasks(toDoArray, currentProject, projectProperty);
+            deleteTasks();
+            projectAddTask(mainContent, input, titleProperty);
+            recoverTasks(filteredTasks, titleProperty, descriptionProperty, dateProperty, mainContent)
+            const projectTitleDiv = document.querySelector(".projectTitle");
+            projectTitleDiv.textContent = currentProject;
+        };
+    });
 
     newProjectLi.appendChild(libutton);
     newProjectLi.appendChild(deleteProject);
@@ -114,6 +115,7 @@ const projectAddTask = (mainContent, input, propertyName) => {
     const addTask = document.createElement("button");
     addTask.classList.add("newToDo");
     addTask.textContent= "+Add Task";
+    addTask.style.display = "block";
 
     mainContent.appendChild(projectTitle);
     mainContent.appendChild(addTask);
