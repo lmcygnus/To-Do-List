@@ -1,8 +1,11 @@
-import { setData, lookData } from "./localStorage";
+import { setData, lookData, deleteFromLocalStorage } from "./localStorage";
 import { mainContent } from ".";
 import { createNewToDo, newTodoDOM, todayDate, closeDialogs, toDoArray, addNewTasks } from "./toDo";
 
-let currentProject = "Default";
+let currentProject = " All";
+const titleProperty = "title"; 
+const descriptionProperty = "description";
+const dateProperty = "dueDate";
 
 class projects {
     constructor(project){
@@ -18,9 +21,9 @@ const deleteElements = (mainContent) => {
 
 let projectsArray = lookData("projects") || [];
 
-const filterTasks = (array, currentProject) => {
+const filterTasks = (array, currentProject, property) => {
     return array.filter(function(object) {
-        return object.project === currentProject;
+        return object[property] === currentProject;
     });
 };
 
@@ -41,7 +44,7 @@ const recoverTasks = (array, titleProperty, descriptionProperty, dateProperty, m
     array.forEach(element => {
         newTodoDOM(element[titleProperty], element[descriptionProperty], element[dateProperty], mainContent);
     });
-}
+};
 
 const newProjectDOM = (input, parent, propertyName) => {
     const newProjectLi = document.createElement("li");
@@ -50,28 +53,45 @@ const newProjectDOM = (input, parent, propertyName) => {
     libutton.textContent = input[propertyName];
     libutton.classList.add("projectLi");
 
-    const titleProperty = "title"; 
-    const descriptionProperty = "description";
-    const dateProperty = "dueDate";
+    let filteredTasks;
 
     libutton.addEventListener("click",  (event) => {
         currentProject = event.target.textContent;
-        let filteredTasks = filterTasks(toDoArray, currentProject);
-        deleteTasks();
-        projectAddTask(mainContent, input, titleProperty);
-        recoverTasks(filteredTasks, titleProperty, descriptionProperty, dateProperty, mainContent)
-        const projectTitleDiv = document.querySelector(".projectTitle");
-        projectTitleDiv.textContent = currentProject;
-        }
-    );
+        if(currentProject === "All") {
+            let tasks = lookData("tasks");
+            deleteTasks();
+            projectAddTask(mainContent, input, titleProperty);
+            recoverTasks(tasks, titleProperty, descriptionProperty, dateProperty, mainContent);
+            const projectTitleDiv = document.querySelector(".projectTitle");
+            projectTitleDiv.textContent = currentProject;
+        } else {
+            const projectProperty = "project";
+            filteredTasks = filterTasks(toDoArray, currentProject, projectProperty);
+            deleteTasks();
+            projectAddTask(mainContent, input, titleProperty);
+            recoverTasks(filteredTasks, titleProperty, descriptionProperty, dateProperty, mainContent)
+            const projectTitleDiv = document.querySelector(".projectTitle");
+            projectTitleDiv.textContent = currentProject;
+        };
+    });
 
     const deleteProject = document.createElement("button");
     deleteProject.textContent = "🗑️";
     deleteProject.classList.add("deleteProject");
 
+    deleteProject.addEventListener("click", () => {
+        const projectProperty = "project";
+        const setName = "projects";
+        const setName2 = "tasks";
+        deleteFromLocalStorage(projectsArray, projectProperty, libutton.textContent, setName);
+        deleteFromLocalStorage(toDoArray, projectProperty, libutton.textContent, setName2)
+        parent.removeChild(newProjectLi);
+    })
+
     newProjectLi.appendChild(libutton);
     newProjectLi.appendChild(deleteProject);
     parent.appendChild(newProjectLi);
+    libutton.click();
 };
 
 const projectAddTask = (mainContent, input, propertyName) => {
@@ -86,7 +106,7 @@ const projectAddTask = (mainContent, input, propertyName) => {
         projectTitle.textContent = `${input.textContent}`;
     }
     else if (propertyName === "project") {
-        projectTitle.textContent = `${input[propertyName]}`
+        projectTitle.textContent = `${input.project}`
     }
 
     projectTitle.classList.add("projectTitle");
@@ -100,7 +120,6 @@ const projectAddTask = (mainContent, input, propertyName) => {
     addTask.addEventListener("click", (e) => {
         e.preventDefault();
         addNewTasks(mainContent);
-        todayDate();
     });
 };
 
@@ -121,5 +140,5 @@ const createNewProject = (input, parent, e) => {
     }
 }; 
     
-export {projects, createNewProject, newProjectDOM, addNewTasks, projectAddTask, filterTasks, projectsArray, recoverProjects, currentProject};
+export {projects, createNewProject, newProjectDOM, addNewTasks, projectAddTask, deleteTasks, filterTasks, projectsArray, recoverProjects, recoverTasks, currentProject, titleProperty, descriptionProperty, dateProperty};
 

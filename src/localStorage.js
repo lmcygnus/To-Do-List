@@ -11,4 +11,12 @@ const lookData = (object) => {
         return null;
     }
 }
-export {setData, lookData};
+
+const deleteFromLocalStorage = (array, propertyName, currentProject, setName) => {
+    let objectIndex = array.findIndex(obj => obj[propertyName] === currentProject);
+    if (objectIndex !== -1) {
+        array.splice(objectIndex, 1);
+    }
+    setData(setName, array);
+}
+export {setData, lookData, deleteFromLocalStorage};

@@ -1,7 +1,7 @@
 import "./style.css";
 import "./checkbox.css"
 import {createNewProject, filterTasks, newProjectDOM, projectAddTask, projects, projectsArray, recoverObjects, recoverProjects} from "./projects";
-import {createNewToDo, todayDate, taskDone } from "./toDo";
+import {createNewToDo, todayDate, taskDone, showTodayTasks } from "./toDo";
 import { lookData, setData } from "./localStorage";
 
 const body = document.querySelector("body");
@@ -51,9 +51,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
   const projectProperty = "project";
   recoverProjects(projectsArray, ul, projectProperty);
 
-  const defaultProjectName = " Default";
-  const defaultProject = filterTasks(projectsArray, defaultProjectName);
-  console.log(defaultProject);
+  const defaultProjectName = " All";
+  const defaultProject = filterTasks(projectsArray, defaultProjectName, projectProperty);
   if(defaultProject.length === 0) {
     const defaultImput = document.querySelector("#newProject");
     createNewProject(defaultImput, ul, e);
@@ -75,6 +74,8 @@ taskForm.addEventListener("submit", (e) => {
   dialog.close();
   taskForm.reset();
 });
+
+showTodayTasks(mainContent);
 
 export {mainContent}
 

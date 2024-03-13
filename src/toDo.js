@@ -1,5 +1,6 @@
-import { setData,lookData } from "./localStorage";
-import { currentProject } from "./projects";
+import { setData,lookData, deleteFromLocalStorage } from "./localStorage";
+import { currentProject, filterTasks, titleProperty, descriptionProperty, dateProperty, recoverTasks, deleteTasks } from "./projects";
+import { mainContent } from ".";
 
 class ToDo {
     constructor(title, description, dueDate, project) {
@@ -90,12 +91,21 @@ const newTodoDOM = (titleImput, descriptionImput, dateInput,  parent) => {
 
         detailsDialog.showModal();
     });
-    
+
+    const deleteTasks = document.createElement("button");
+    deleteTasks.textContent = "🗑️";
+    deleteTasks.addEventListener("click", () => {
+        const titleProperty = "title";
+        const setName = "tasks";
+        deleteFromLocalStorage(toDoArray, titleProperty, taskName.textContent, setName);
+        parent.removeChild(toDoDiv);
+    })
     checkboxWrapper.appendChild(checkbox);
     checkboxWrapper.appendChild(label);
     todoContainer.appendChild(checkboxWrapper);
     todoContainer.appendChild(taskName);
     container2.appendChild(seeDetailsbt);
+    container2.appendChild(deleteTasks);
     toDoDiv.appendChild(todoContainer);
     toDoDiv.appendChild(container2);
 
@@ -115,15 +125,28 @@ const createNewToDo = (titleImput, descriptionImput, dueDateImput, currentProjec
     setData(`tasks`, toDoArray);
 };
 
-const todayDate = () => {
+
+const todayDate = (input) => {
     let currentDate = new Date().toISOString().split('T')[0];
-    document.querySelector('.date').value = currentDate;
+    input.value = currentDate;
+};
+
+const showTodayTasks = () => {
+    const todayBt = document.querySelector("h4");
+    const dateProperty = "dueDate";
+    todayBt.addEventListener("click", () => {
+        let currentDate = new Date().toISOString().split('T')[0];
+        deleteTasks();
+        let todayTasks = filterTasks(toDoArray, currentDate, dateProperty);
+        console.log(todayTasks);
+        recoverTasks(todayTasks, titleProperty, descriptionProperty, dateProperty, mainContent);
+    });
 };
 
 const closeDialogs = (dialogs, forms) => {
     forms.reset();
     dialogs.close();
-  }
+};
 
 const taskDone = (myCheckbox, taskText) => {
     if (myCheckbox.checked) {
@@ -171,6 +194,7 @@ const addNewTasks = (mainContent) => {
     dateInput.type = "date";
     dateInput.classList.add("date");
     dateInput.required = true;
+    todayDate(dateInput);
   
     const addButton = document.createElement("button");
     addButton.type = "submit";
@@ -193,4 +217,4 @@ const addNewTasks = (mainContent) => {
     mainContent.appendChild(newTodoDialog);
   }; 
 
-export {ToDo, createNewToDo, newTodoDOM, todayDate, taskDone, closeDialogs, toDoArray, addNewTasks};
+export {ToDo, showTodayTasks, createNewToDo, newTodoDOM, todayDate, taskDone, closeDialogs, toDoArray, addNewTasks};
