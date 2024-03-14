@@ -2,12 +2,15 @@ import { setData,lookData, deleteFromLocalStorage } from "./localStorage";
 import { currentProject, filterTasks, titleProperty, descriptionProperty, dateProperty, recoverTasks, deleteTasks } from "./projects";
 import { mainContent } from ".";
 
+let taskChecked;
+
 class ToDo {
-    constructor(title, description, dueDate, project) {
+    constructor(title, description, dueDate, project, completed) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.project = project;
+        this.completed = completed;
     };
 };
 
@@ -42,7 +45,7 @@ const seeDetails = (parent) => {
 let numberForId = 0;
 let toDoArray = lookData("tasks") || [];
 
-const newTodoDOM = (titleImput, descriptionImput, dateInput,  parent) => {
+const newTodoDOM = (titleImput, descriptionImput, dateInput, obj,  parent) => {
     numberForId ++;
 
     const toDoDiv = document.createElement("div");
@@ -68,6 +71,7 @@ const newTodoDOM = (titleImput, descriptionImput, dateInput,  parent) => {
     taskName.textContent = titleImput;
 
     checkbox.addEventListener("change", () => {
+        obj.completed = true;
         taskDone(checkbox, taskName);
     })
 
@@ -112,15 +116,16 @@ const newTodoDOM = (titleImput, descriptionImput, dateInput,  parent) => {
     parent.appendChild(toDoDiv);
 };
 
-const createNewToDo = (titleImput, descriptionImput, dueDateImput, currentProject, e, parent) => {
+const createNewToDo = (titleImput, descriptionImput, dueDateImput, currentProject, e, completed, parent) => {
     e.preventDefault();
     const newToDo = new ToDo(
         titleImput.value,
         descriptionImput.value,
         dueDateImput.value,
         currentProject,
+        false
     );
-    newTodoDOM(titleImput.value, descriptionImput.value, dueDateImput.value,  parent);
+    newTodoDOM(titleImput.value, descriptionImput.value, dueDateImput.value, completed, parent);
     toDoArray.push(newToDo);
     setData(`tasks`, toDoArray);
 };
@@ -152,7 +157,7 @@ const closeDialogs = (dialogs, forms) => {
     dialogs.close();
 };
 
-const taskDone = (myCheckbox, taskText) => {
+const taskDone = (myCheckbox, taskText, obj) => {
     if (myCheckbox.checked) {
         taskText.style.textDecoration = "line-through"
         taskText.style.color = "gray";
@@ -221,4 +226,4 @@ const addNewTasks = (mainContent) => {
     mainContent.appendChild(newTodoDialog);
   }; 
 
-export {ToDo, showTodayTasks, createNewToDo, newTodoDOM, todayDate, taskDone, closeDialogs, toDoArray, addNewTasks};
+export {ToDo, showTodayTasks, createNewToDo, newTodoDOM, todayDate, taskDone, closeDialogs, toDoArray, addNewTasks, taskChecked};

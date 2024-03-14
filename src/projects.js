@@ -17,7 +17,7 @@ const deleteElements = (mainContent) => {
     while (mainContent.firstChild) {
         mainContent.removeChild(mainContent.firstChild);
     }
-}
+};
 
 let projectsArray = lookData("projects") || [];
 
@@ -42,7 +42,7 @@ const recoverProjects = (array, parent, propertyName) => {
 
 const recoverTasks = (array, titleProperty, descriptionProperty, dateProperty, mainContent) => {
     array.forEach(element => {
-        newTodoDOM(element[titleProperty], element[descriptionProperty], element[dateProperty], mainContent);
+        newTodoDOM(element[titleProperty], element[descriptionProperty], element[dateProperty], element,  mainContent);
     });
 };
 
@@ -68,6 +68,11 @@ const newProjectDOM = (input, parent, propertyName) => {
 
     let filteredTasks;
 
+    newProjectLi.appendChild(libutton);
+    newProjectLi.appendChild(deleteProject);
+    parent.appendChild(newProjectLi);
+    libutton.click();
+
     libutton.addEventListener("click",  (event) => {
         currentProject = event.target.textContent;
         if(currentProject === "All") {
@@ -88,11 +93,6 @@ const newProjectDOM = (input, parent, propertyName) => {
             projectTitleDiv.textContent = currentProject;
         };
     });
-
-    newProjectLi.appendChild(libutton);
-    newProjectLi.appendChild(deleteProject);
-    parent.appendChild(newProjectLi);
-    libutton.click();
 };
 
 const projectAddTask = (mainContent, input, propertyName) => {

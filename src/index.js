@@ -57,6 +57,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
     const defaultImput = document.querySelector("#newProject");
     createNewProject(defaultImput, ul, e);
   }
+  const allProjectBt = document.querySelector(".projectLi");
+  allProjectBt.click();
 });
 
 projectForm.addEventListener("submit", (e) => {
