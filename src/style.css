@@ -117,6 +117,11 @@ button {
     gap: 20px;
     width: 50%;
 }
+
+.checked {
+    text-decoration: line-through;
+    color: gray;
+}
 .deleteProject:hover {
     color: var(--main-color);
     background-color: white;

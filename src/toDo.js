@@ -71,9 +71,8 @@ const newTodoDOM = (titleImput, descriptionImput, dateInput, obj,  parent) => {
     taskName.textContent = titleImput;
 
     checkbox.addEventListener("change", () => {
-        obj.completed = true;
-        taskDone(checkbox, taskName);
-    })
+        taskDone(checkbox, taskName, toDoDiv);
+    });
 
     const label = document.createElement('label');
     label.classList.add('check-box');
@@ -123,9 +122,9 @@ const createNewToDo = (titleImput, descriptionImput, dueDateImput, currentProjec
         descriptionImput.value,
         dueDateImput.value,
         currentProject,
-        false
+        completed,
     );
-    newTodoDOM(titleImput.value, descriptionImput.value, dueDateImput.value, completed, parent);
+    newTodoDOM(titleImput.value, descriptionImput.value, dueDateImput.value, false, parent);
     toDoArray.push(newToDo);
     setData(`tasks`, toDoArray);
 };
@@ -157,13 +156,21 @@ const closeDialogs = (dialogs, forms) => {
     dialogs.close();
 };
 
-const taskDone = (myCheckbox, taskText, obj) => {
+const taskDone = (myCheckbox, taskText, toDoDiv) => {
     if (myCheckbox.checked) {
         taskText.style.textDecoration = "line-through"
         taskText.style.color = "gray";
+        myCheckbox.classList.add("checked");
+        setTimeout(() => {
+            toDoDiv.style.display = "none";
+        }, 3000);
+        const titleProperty = "title";
+        const setName = "tasks";
+        deleteFromLocalStorage(toDoArray, titleProperty, taskText.textContent, setName)
     } else {
         taskText.style.textDecoration = "none";
         taskText.style.color = "rgb(0, 65, 119)";
+        myCheckbox.classList.remove("checked");
     }
 };
 
@@ -179,7 +186,7 @@ const addNewTasks = (mainContent) => {
 
     createTaskForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        createNewToDo(titleInput, descriptionTextarea, dateInput, currentProject, e, mainContent);
+        createNewToDo(titleInput, descriptionTextarea, dateInput, currentProject, e, false, mainContent);
         closeDialogs(newTodoDialog, createTaskForm);
     });
   
